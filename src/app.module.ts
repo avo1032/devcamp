@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { SuccessInterceptor } from './common/interceptors/success.interceptor';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 @Module({
@@ -23,7 +25,10 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: APP_INTERCEPTOR, useClass: SuccessInterceptor },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
