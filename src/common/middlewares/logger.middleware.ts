@@ -7,7 +7,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction) {
     this.logger.log(
-      `[REQUEST] ${req.ip} ${req.method} ${res.statusCode} ${
+      `\n[REQUEST] ${req.ip} ${req.method} ${res.statusCode} ${
         req.originalUrl
       }\n[BODY] ${JSON.stringify(req.body, null, 2)}\n[QUERY] ${JSON.stringify(
         req.query,
