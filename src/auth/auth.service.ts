@@ -11,6 +11,7 @@ import { createEntityId } from 'src/common/util/create.entity.id';
 import { User } from 'src/user/entity/uesr.entity';
 import { RefreshTokenRepository } from 'src/user/repository/refresh.token.repository';
 import * as argon2 from 'argon2';
+import { SignResponseDto } from './dto/res.auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signUp(body: SignUpDto) {
+  async signUp(body: SignUpDto): Promise<SignResponseDto>  {
     const { email, password, name } = body;
     const isExistEmail = await this.userRepository.findOneByEmail(email);
     if (!!isExistEmail) {
@@ -31,10 +32,11 @@ export class AuthService {
       this.createAccessToken(email),
       this.createRefreshToken(user),
     ]);
+    delete user.password;
     return { user, accessToken, refreshToken };
   }
 
-  async signIn(body: SignInDto) {
+  async signIn(body: SignInDto): Promise<SignResponseDto>  {
     const { email, password } = body;
     const user = await this.userRepository.findOneByEmail(email);
     if (!user) {
@@ -47,6 +49,7 @@ export class AuthService {
       this.createAccessToken(email),
       this.createRefreshToken(user),
     ]);
+    delete user.password;
     return { user, accessToken, refreshToken };
   }
 
