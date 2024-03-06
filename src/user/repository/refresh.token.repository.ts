@@ -14,6 +14,7 @@ export class RefreshTokenRepository {
   async createRefreshToken(id: string, expiredAt: Date, user: User) {
     return this.refreshTokenRepository.save({
       id,
+      sub: user.email,
       expiredAt,
       user,
     });

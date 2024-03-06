@@ -13,7 +13,10 @@ export class UserRepository {
   }
 
   async findOneByEmail(email: string) {
-    return this.userRepository.findOneBy({ email });
+    return this.userRepository.findOne({
+      where: { email },
+      relations: ['refreshToken'],
+    });
   }
 
   async signUp(email: string, password: string, name: string) {
