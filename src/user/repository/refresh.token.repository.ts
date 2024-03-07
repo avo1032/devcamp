@@ -11,10 +11,11 @@ export class RefreshTokenRepository {
     this.refreshTokenRepository = this.dataSource.getRepository(RefreshToken);
   }
 
-  async createRefreshToken(id: string, expiredAt: Date, user: User) {
+  async createRefreshToken(id: string, expiredAt: Date, token: string, user: User) {
     return this.refreshTokenRepository.save({
       id,
       sub: user.email,
+      token,
       expiredAt,
       user,
     });

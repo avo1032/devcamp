@@ -6,7 +6,7 @@ import {
 import { SignInDto, SignUpDto } from './dto/req.auth.dto';
 import { UserRepository } from 'src/user/repository/user.repository';
 import { JwtService } from '@nestjs/jwt';
-import { addMinutes, addWeeks } from 'date-fns';
+import { addDays } from 'date-fns';
 import { createEntityId } from 'src/common/util/create.entity.id';
 import { User } from 'src/user/entity/uesr.entity';
 import { RefreshTokenRepository } from 'src/user/repository/refresh.token.repository';
@@ -21,7 +21,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signUp(body: SignUpDto): Promise<SignResponseDto>  {
+  async signUp(body: SignUpDto): Promise<SignResponseDto> {
     const { email, password, name } = body;
     const isExistEmail = await this.userRepository.findOneByEmail(email);
     if (!!isExistEmail) {
@@ -36,7 +36,7 @@ export class AuthService {
     return { user, accessToken, refreshToken };
   }
 
-  async signIn(body: SignInDto): Promise<SignResponseDto>  {
+  async signIn(body: SignInDto): Promise<SignResponseDto> {
     const { email, password } = body;
     const user = await this.userRepository.findOneByEmail(email);
     if (!user) {
@@ -58,32 +58,39 @@ export class AuthService {
       {
         id: createEntityId(),
         sub: email,
-        expiredAt: addMinutes(new Date(), 60),
+        type: 'access',
+        expiredAt: addDays(new Date(), 1),
       },
       {
         secret: process.env.ACCESS_TOKEN_SECRET,
         algorithm: 'HS512',
-        expiresIn: '60m',
+        expiresIn: '1d',
       },
     );
   }
 
   async createRefreshToken(user: User) {
     const jti = user.refreshToken ? user.refreshToken.id : createEntityId();
-    const expiredAt = addWeeks(new Date(), 1);
+    const expiredAt = addDays(new Date(), 7);
     const refreshToken = this.jwtService.sign(
       {
         id: jti,
         sub: user.email,
+        type: 'refresh',
         expiredAt,
       },
       {
         secret: process.env.REFRESH_TOKEN_SECRET,
         algorithm: 'HS512',
-        expiresIn: '60m',
+        expiresIn: '7d',
       },
     );
-    await this.refreshTokenRepository.createRefreshToken(jti, expiredAt, user);
+    await this.refreshTokenRepository.createRefreshToken(
+      jti,
+      expiredAt,
+      refreshToken,
+      user,
+    );
     return refreshToken;
   }
 }
