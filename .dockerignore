@@ -1,0 +1,10 @@
+node_modules
+.dockerignore
+Dockerfile
+Makefile
+.gitignore
+docker-compose*
+.DS_Store
+.vscode
+*.md
+dist
