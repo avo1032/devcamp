@@ -94,6 +94,7 @@ export class AuthService {
       this.createAccessToken(user.email),
       this.createRefreshToken(user),
     ]);
+    delete user.password;
     return { user, accessToken, refreshToken };
   }
 }
