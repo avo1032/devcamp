@@ -85,12 +85,15 @@ export class AuthService {
         expiresIn: '7d',
       },
     );
-    await this.refreshTokenRepository.createRefreshToken(
-      jti,
-      expiredAt,
-      refreshToken,
-      user,
-    );
+    await this.refreshTokenRepository.createRefreshToken(jti, expiredAt, user);
     return refreshToken;
+  }
+
+  async refresh(user: User) {
+    const [accessToken, refreshToken] = await Promise.all([
+      this.createAccessToken(user.email),
+      this.createRefreshToken(user),
+    ]);
+    return { user, accessToken, refreshToken };
   }
 }

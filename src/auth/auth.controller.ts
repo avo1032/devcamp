@@ -1,8 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto, SignUpDto } from './dto/req.auth.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SignResponse, SignResponseDto } from './dto/res.auth.dto';
+import { User } from 'src/common/decorators/user.decorator';
+import { JwtAuthGuard } from './jwt/jwt.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -21,5 +23,11 @@ export class AuthController {
   @Post('sign-in')
   async signIn(@Body() body: SignInDto): Promise<SignResponseDto> {
     return this.authService.signIn(body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('refresh')
+  async refresh(@User() user) {
+    return this.authService.refresh(user);
   }
 }

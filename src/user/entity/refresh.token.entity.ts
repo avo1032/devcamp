@@ -17,9 +17,6 @@ export class RefreshToken {
   sub: string;
 
   @Column()
-  token: string;
-
-  @Column()
   expiredAt: Date;
 
   @CreateDateColumn()
