@@ -1,0 +1,22 @@
+# Node.js 공식 이미지를 기반으로 합니다.
+FROM node:20
+
+# 애플리케이션 디렉토리를 생성합니다.
+WORKDIR /usr/src/app
+
+# 애플리케이션 의존성 파일을 복사합니다.
+# package.json과 yarn.lock 파일만 복사하여 캐시를 이용할 수 있도록 합니다.
+COPY package.json ./
+COPY yarn.lock ./
+
+# 의존성을 설치합니다.
+RUN yarn install
+
+# 나머지 애플리케이션 소스를 복사합니다.
+COPY . .
+
+# 애플리케이션을 실행할 포트를 지정합니다.
+EXPOSE 3000
+
+# 애플리케이션을 실행합니다.
+CMD ["yarn", "start:prod"]
