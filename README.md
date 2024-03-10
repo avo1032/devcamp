@@ -10,4 +10,5 @@
 [3월 6일 3일차](https://avodev.tistory.com/entry/%EB%8D%B0%EB%B8%8C%EC%BA%A0%ED%94%84-3%EC%9D%BC%EC%B0%A8)  
 [3월 7일 4일차](https://avodev.tistory.com/entry/%EB%8D%B0%EB%B8%8C%EC%BA%A0%ED%94%84-4%EC%9D%BC%EC%B0%A8)  
 [3월 8일 4일차](https://avodev.tistory.com/entry/%EB%8D%B0%EB%B8%8C%EC%BA%A0%ED%94%84-5%EC%9D%BC%EC%B0%A8)  
-[2024.03.10](https://avodev.tistory.com/entry/20240319%ED%86%A0)
+[2024.03.09](https://avodev.tistory.com/entry/20240319%ED%86%A0)
+[2024.03.10](https://avodev.tistory.com/entry/20240310%EC%9D%BC)
