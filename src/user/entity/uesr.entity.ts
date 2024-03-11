@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { RefreshToken } from './refresh.token.entity';
+import { Product } from 'src/product/entity/product.entity';
 
 @Entity()
 export class User {
@@ -34,4 +36,7 @@ export class User {
 
   @OneToOne(() => RefreshToken, (refreshToken) => refreshToken.user)
   refreshToken: RefreshToken;
+
+  @OneToMany(() => Product, (product) => product.seller)
+  products: Product[];
 }
