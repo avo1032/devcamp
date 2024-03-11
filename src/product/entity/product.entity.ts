@@ -8,6 +8,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
 export enum ProductStatus {
   AVAILABLE = 'available', // 판매중
   OUTOFSTOCK = 'out-of-stock', // 품절
