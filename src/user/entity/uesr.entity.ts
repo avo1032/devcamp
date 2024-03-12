@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { RefreshToken } from './refresh.token.entity';
 import { Product } from 'src/product/entity/product.entity';
+import { IssuedCoupon } from 'src/coupon/entity/issued.coupon.entity';
 
 @Entity()
 export class User {
@@ -39,4 +40,7 @@ export class User {
 
   @OneToMany(() => Product, (product) => product.seller)
   products: Product[];
+
+  @OneToMany(() => IssuedCoupon, (coupon) => coupon.user)
+  coupons: IssuedCoupon[];
 }
