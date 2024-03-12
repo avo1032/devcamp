@@ -1,10 +1,11 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto, SignUpDto } from './dto/req.auth.dto';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SignResponse, SignResponseDto } from './dto/res.auth.dto';
 import { User } from 'src/common/decorators/user.decorator';
 import { JwtAuthGuard } from './jwt/jwt.guard';
+import { RolesGuard } from 'src/common/guards/role.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -25,7 +26,7 @@ export class AuthController {
     return this.authService.signIn(body);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('refresh')
   async refresh(@User() user) {
     return this.authService.refresh(user);

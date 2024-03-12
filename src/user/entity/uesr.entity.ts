@@ -12,6 +12,8 @@ import { RefreshToken } from './refresh.token.entity';
 import { Product } from 'src/product/entity/product.entity';
 import { IssuedCoupon } from 'src/coupon/entity/issued.coupon.entity';
 
+export type Role = 'admin';
+
 @Entity()
 export class User {
   @PrimaryColumn()
@@ -25,6 +27,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column('simple-array', { nullable: true })
+  roles: Role[];
 
   @CreateDateColumn()
   createdAt: Date;
