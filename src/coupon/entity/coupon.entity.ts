@@ -23,6 +23,9 @@ export class Coupon {
   @Column() // 발급 후 몇일동안 사용가능한지
   addDays: number;
 
+  @Column()
+  limit: number;
+
   @OneToMany(() => IssuedCoupon, (coupon) => coupon.coupon)
   issuedCoupons: IssuedCoupon[];
 
