@@ -1,15 +1,22 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { IssuedCoupon } from './issued.coupon.entity';
 
-export type CouponType = 'percent' | 'fixed';
+export enum CouponType {
+  PERCENT='percent',
+  FIXED='fixed'
+}
 
 @Entity()
 export class Coupon {
   @PrimaryColumn()
   id: string;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: CouponType,
+  })
   type: CouponType;
+  
 
   @Column()
   value: number;
@@ -23,7 +30,7 @@ export class Coupon {
   @Column() // 발급 후 몇일동안 사용가능한지
   addDays: number;
 
-  @Column()
+  @Column() // 한사람당 발급가능 횟수
   limit: number;
 
   @OneToMany(() => IssuedCoupon, (coupon) => coupon.coupon)

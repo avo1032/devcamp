@@ -20,6 +20,7 @@ export class CouponRepository {
   ): Promise<Coupon> {
     return this.couponRepository.save({
       id: createEntityId(),
+      type,
       value,
       description,
       addDays,
