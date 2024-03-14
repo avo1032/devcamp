@@ -31,6 +31,9 @@ export class User {
   @Column('simple-array', { nullable: true })
   roles: Role[];
 
+  @Column()
+  point: number;
+
   @CreateDateColumn()
   createdAt: Date;
 
