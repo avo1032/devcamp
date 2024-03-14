@@ -28,4 +28,10 @@ export class CouponRepository {
       isActive: true,
     });
   }
+
+  async findOneById(couponId: string) {
+    return this.couponRepository.findOne({
+      where: { id: couponId },
+    });
+  }
 }
