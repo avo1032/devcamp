@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { SignInDto, SignUpDto } from './dto/req.auth.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SignResponse, SignResponseDto } from './dto/res.auth.dto';
-import { User } from 'src/common/decorators/user.decorator';
+import { UserInfo } from 'src/common/decorators/user.decorator';
 import { JwtAuthGuard } from './jwt/jwt.guard';
 import { RolesGuard } from 'src/common/guards/role.guard';
 
@@ -28,7 +28,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('refresh')
-  async refresh(@User() user) {
+  async refresh(@UserInfo() user) {
     return this.authService.refresh(user);
   }
 }
