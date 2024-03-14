@@ -11,6 +11,7 @@ import {
 import { RefreshToken } from './refresh.token.entity';
 import { Product } from 'src/product/entity/product.entity';
 import { IssuedCoupon } from 'src/coupon/entity/issued.coupon.entity';
+import { PointHistory } from './point.history.entity';
 
 export type Role = 'admin';
 
@@ -51,4 +52,7 @@ export class User {
 
   @OneToMany(() => IssuedCoupon, (coupon) => coupon.user)
   coupons: IssuedCoupon[];
+
+  @OneToMany(() => PointHistory, (history) => history.user)
+  pointHistories: PointHistory[];
 }
